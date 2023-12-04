@@ -1,0 +1,19 @@
+<launch>
+
+  <!-- We resume the logic in empty_world.launch, changing only the name of the world to be launched -->
+  <include file="$(find gazebo_ros)/launch/empty_world.launch">
+    <arg name="world_name" value="$(find farm)/worlds/crop_and_weed.world"/> <!-- Note: the world_name is with respect to GAZEBO_RESOURCE_PATH environmental variable -->
+    <arg name="paused" value="false"/>
+    <arg name="use_sim_time" value="true"/>
+    <arg name="gui" value="true"/>
+    <arg name="recording" value="false"/>
+    <arg name="debug" value="false"/>
+  </include>
+  
+  <param name="robot_description" command="../../../../../opt/ros/noetic/bin/xacro '$(find agribot_control)/urdf/agribot.xacro'"/>
+  <node name="agribot_spawn" pkg="gazebo_ros" type="spawn_model" output="screen" respawn="false"
+   args="-x -6.0 -y 0 -z 1.13 -Y 0   -urdf -param robot_description -model agribot">
+  </node> 
+  
+  
+</launch>
